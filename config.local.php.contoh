@@ -1,10 +1,11 @@
 <?php
 // CONTOH konfigurasi server hosting. Nilai di sini menimpa config.php.
 //
-// Di hosting, simpan salinan file ini dengan nama  kpi-yunas-config.php
-// SATU TINGKAT DI ATAS folder aplikasi (di luar folder web), contoh di Hostinger:
-//   folder aplikasi : /home/u123456789/domains/kpi.contoh.com/public_html/
-//   file konfigurasi: /home/u123456789/domains/kpi.contoh.com/kpi-yunas-config.php
+// Di hosting, simpan salinan file ini dengan nama  kpi-yunas-config.php  DI LUAR folder web.
+// Contoh subdomain Hostinger (folder subdomain berada di dalam public_html domain utama):
+//   folder aplikasi : /home/u123456789/domains/contoh.com/public_html/kpi/
+//   file konfigurasi: /home/u123456789/domains/contoh.com/kpi-yunas-config.php   (dua tingkat di atas)
+// Bila subdomain punya folder sendiri (…/domains/kpi.contoh.com/public_html/), taruh satu tingkat di atas.
 // Di sana file ini tidak bisa dibuka dari internet dan tidak tertimpa/terhapus saat deploy Git.
 // (Alternatif: config.local.php di dalam folder aplikasi.)
 //

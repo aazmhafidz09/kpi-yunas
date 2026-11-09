@@ -15,11 +15,13 @@ define('APP_VERSI', (function (): string {
 
 $CONFIG = require __DIR__ . '/../config.php';
 // Pengaturan khusus server (mis. hosting) menimpa config.php. Dicari berurutan:
-//  1. ../kpi-yunas-config.php  → SATU TINGKAT DI ATAS folder aplikasi (di luar folder web).
-//     Disarankan di hosting: tidak bisa dibuka dari internet dan tidak tersentuh deploy Git.
-//  2. config.local.php         → di dalam folder aplikasi (praktis di laptop).
+//  1. ../../kpi-yunas-config.php → DUA tingkat di atas folder aplikasi. Untuk subdomain Hostinger yang
+//     foldernya public_html/<sub>, ini = folder domain (di luar folder web, tidak menyentuh situs lain).
+//  2. ../kpi-yunas-config.php    → SATU tingkat di atas folder aplikasi (bila subdomain punya folder sendiri).
+//  3. config.local.php           → di dalam folder aplikasi (praktis di laptop).
+// File 1/2 tidak bisa dibuka dari internet dan tidak tersentuh deploy Git.
 define('BERKAS_CONFIG_LOKAL', (function (): ?string {
-    foreach ([dirname(__DIR__, 2) . '/kpi-yunas-config.php', dirname(__DIR__) . '/config.local.php'] as $f) {
+    foreach ([dirname(__DIR__, 3) . '/kpi-yunas-config.php', dirname(__DIR__, 2) . '/kpi-yunas-config.php', dirname(__DIR__) . '/config.local.php'] as $f) {
         if (is_file($f)) return $f;
     }
     return null;

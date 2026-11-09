@@ -46,6 +46,8 @@ tampil_header('Rekap Bonus', 'index');
     <div class="label">Omzet bulan ini</div>
     <div class="nilai"><?= $periode['omzet'] === null ? '–' : rupiah($periode['omzet']) ?></div>
     <div class="sub">Min <?= rupiah($periode['batas_minimum']) ?> · Target <?= rupiah($periode['batas_target']) ?> · Stretch <?= rupiah($periode['batas_stretch']) ?></div>
+    <div class="sub"><?= h(keterangan_omzet($periode)) ?></div>
+    <?php if ($periode['omzet_galat']): ?><div class="sub peringatan-teks"><?= h($periode['omzet_galat']) ?></div><?php endif; ?>
   </div>
   <?php endif; ?>
   <div class="kartu">

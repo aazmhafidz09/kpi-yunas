@@ -33,6 +33,18 @@ if (BERKAS_CONFIG_LOKAL) {
     ob_end_clean();
     $CONFIG = array_merge($CONFIG, is_array($lokal) ? $lokal : []);
 }
+// Kredensial database aplikasi utama (sumber omzet otomatis) di file terpisah, dicari di folder yang sama:
+// kpi-yunas-sumber-omzet.php → return ['db_host' => ..., 'db_name' => ..., 'db_user' => ..., 'db_pass' => ...];
+foreach ([dirname(__DIR__, 3), dirname(__DIR__, 2), dirname(__DIR__)] as $dir) {
+    if (is_file("$dir/kpi-yunas-sumber-omzet.php")) {
+        ob_start();
+        $sumber = require "$dir/kpi-yunas-sumber-omzet.php";
+        ob_end_clean();
+        if (is_array($sumber)) $CONFIG['sumber_omzet'] = $sumber;
+        break;
+    }
+}
+unset($lokal, $sumber, $dir);
 date_default_timezone_set($CONFIG['timezone']);
 
 // ---------- Mode produksi: sembunyikan detail error dari pengunjung ----------
@@ -168,6 +180,7 @@ function parse_rupiah($s): ?int
 }
 
 require __DIR__ . '/kpi.php';
+require __DIR__ . '/omzet.php';
 require __DIR__ . '/usulan.php';
 require __DIR__ . '/auth.php';
 require __DIR__ . '/layout.php';

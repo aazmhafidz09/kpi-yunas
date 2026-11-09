@@ -2,7 +2,7 @@
 DirectoryIndex beranda.php index.php
 
 # Jangan sajikan file dokumentasi, contoh konfigurasi, cap rilis, atau skrip SQL lewat web
-<FilesMatch "\.(md|sql|ini|log|bak|zip)$|^config\.local\.php\.contoh$|^rilis\.txt$|^\.git">
+<FilesMatch "\.(md|sql|ini|log|bak|zip)$|\.contoh$|^rilis\.txt$|^\.git">
   Require all denied
 </FilesMatch>
 

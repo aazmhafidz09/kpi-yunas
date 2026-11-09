@@ -205,6 +205,9 @@ details.sebaris-detail summary::-webkit-details-marker { display: none; }
 details.sebaris-detail[open] form { margin-top: 6px; }
 
 .akun-pasang { display: flex; flex-direction: column; gap: 8px; max-width: 420px; }
+.pilih-sumber { border: 1px solid var(--garis); border-radius: 8px; padding: 8px 12px 10px; margin: 0; display: flex; flex-direction: column; gap: 6px; }
+.pilih-sumber legend { font-size: 13px; color: var(--redup); padding: 0 4px; }
+input[readonly].redup { background: #f3f2ee; color: var(--redup); }
 .tombol-install { font: inherit; }
 
 @media (max-width: 760px) {

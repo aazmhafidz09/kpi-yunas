@@ -12,4 +12,5 @@ return [
     'debug' => true,               // tampilkan detail error (HANYA untuk laptop)
     'paksa_https' => false,        // alihkan http:// ke https:// (aktifkan di hosting)
     'kode_setup' => '',            // wajib diisi bila halaman "Buat akun Pemilik" dibuka dari luar laptop
+    'sumber_omzet' => null,        // diisi dari kpi-yunas-sumber-omzet.php (lihat kpi-yunas-sumber-omzet.php.contoh)
 ];

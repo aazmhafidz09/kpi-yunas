@@ -1,5 +1,7 @@
 # Rahasia & pengaturan khusus server — JANGAN masuk repositori
 config.local.php
+kpi-yunas-config.php
+kpi-yunas-sumber-omzet.php
 
 # Hasil paket (zip & salinan data berisi akun)
 dist/

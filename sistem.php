@@ -19,7 +19,9 @@ $sudah = migrasi_sudah();
 $tertunda = array_diff_key($berkas, $sudah);
 $dbVersi = q('SELECT VERSION()')->fetchColumn();
 $dbJam = q('SELECT NOW()')->fetchColumn();
+[$omzetOk, $omzetKet] = uji_sumber_omzet();
 $cek = [
+    'Sumber omzet otomatis (Total Pendapatan yunas-studio.com): ' . $omzetKet => $omzetOk,
     'PHP ' . PHP_VERSION . ' (minimal 8.1)' => version_compare(PHP_VERSION, '8.1', '>='),
     'Ekstensi pdo_mysql' => extension_loaded('pdo_mysql'),
     'Ekstensi mbstring' => extension_loaded('mbstring'),

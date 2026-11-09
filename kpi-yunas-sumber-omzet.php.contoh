@@ -1,0 +1,11 @@
+<?php
+// CONTOH kredensial database aplikasi utama yunas-studio.com, untuk omzet otomatis.
+// Di hosting simpan sebagai  kpi-yunas-sumber-omzet.php  di folder yang sama dengan kpi-yunas-config.php
+// (di luar folder web). Aplikasi KPI hanya MEMBACA tabel `transaksi` (koneksi READ ONLY).
+// db_pass = nilai DB_PASSWORD di file .env aplikasi utama. Simpan tanpa BOM.
+return [
+    'db_host' => 'localhost',
+    'db_name' => 'u485208612_yunas_db',
+    'db_user' => 'u485208612_admin',
+    'db_pass' => 'GANTI_DENGAN_DB_PASSWORD_DARI_ENV',
+];

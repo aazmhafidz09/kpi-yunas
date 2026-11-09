@@ -18,24 +18,24 @@ function cfg(string $kunci): float
     return (float)(pengaturan()[$kunci] ?? 0);
 }
 
+// Setiap periode yang dimuat lewat fungsi di bawah otomatis disegarkan omzetnya (lib/omzet.php).
 function ambil_periode(int $id): ?array
 {
     $p = q('SELECT * FROM periode WHERE id = ?', [$id])->fetch();
-    return $p ?: null;
+    return $p ? sinkron_omzet($p) : null;
 }
 
 /** Periode default: bulan berjalan bila ada, jika tidak periode terakhir. */
 function periode_default(): ?array
 {
     $p = q('SELECT * FROM periode WHERE tahun = ? AND bulan = ?', [(int)date('Y'), (int)date('n')])->fetch();
-    if ($p) return $p;
-    $p = q('SELECT * FROM periode ORDER BY tahun DESC, bulan DESC LIMIT 1')->fetch();
-    return $p ?: null;
+    if (!$p) $p = q('SELECT * FROM periode ORDER BY tahun DESC, bulan DESC LIMIT 1')->fetch();
+    return $p ? sinkron_omzet($p) : null;
 }
 
 function daftar_periode(): array
 {
-    return q('SELECT * FROM periode ORDER BY tahun, bulan')->fetchAll();
+    return array_map('sinkron_omzet', q('SELECT * FROM periode ORDER BY tahun, bulan')->fetchAll());
 }
 
 function daftar_pegawai(bool $hanyaAktif = true): array

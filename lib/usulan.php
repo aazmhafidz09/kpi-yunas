@@ -6,7 +6,7 @@ function periode_untuk_tanggal(string $tgl): ?array
 {
     $t = strtotime($tgl);
     $p = q('SELECT * FROM periode WHERE tahun = ? AND bulan = ?', [(int)date('Y', $t), (int)date('n', $t)])->fetch();
-    return $p ?: null;
+    return $p ? sinkron_omzet($p) : null;
 }
 
 function tanggal_valid(string $tgl): bool

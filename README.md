@@ -94,6 +94,17 @@ Kebutuhan: PHP 8.1+ (ekstensi `pdo_mysql`, `mbstring`), MySQL/MariaDB, **HTTPS**
 - **Zona waktu database** dikunci ke WIB (`db_zona_waktu`), walau server memakai UTC.
 - **Halaman setup** (buat akun Pemilik pertama) hanya terbuka dari laptop sendiri; dari luar wajib memasukkan `kode_setup` (min. 12 karakter) yang diisi di `config.local.php`.
 
+## Omzet otomatis dari yunas-studio.com
+
+Omzet (Bonus A) bisa diambil otomatis dari kartu **Total Pendapatan** aplikasi utama (`TransaksiController`):
+`SUM(dp_amount)` transaksi berstatus `dp` + `SUM(total_price)` transaksi `sudah dibayar`, untuk transaksi yang **dibuat** (`created_at`) di bulan itu (tabel `transaksi`, database `u485208612_yunas_db`).
+
+- Kode: `lib/omzet.php`. Koneksi **READ ONLY** (perintah tulis ditolak MySQL), satu kueri penjumlahan, tanpa data pelanggan.
+- Kredensial: `kpi-yunas-sumber-omzet.php` di folder yang sama dengan `kpi-yunas-config.php` (contoh: `kpi-yunas-sumber-omzet.php.contoh`; `db_pass` = `DB_PASSWORD` di `.env` aplikasi utama).
+- Diperbarui paling lambat tiap 10 menit untuk periode **Berjalan** (tombol *Perbarui omzet sekarang* di Omzet & Periode). Saat periode ditandai **Final**, omzet diambil sekali lagi lalu **dibekukan**.
+- Per periode bisa dipilih *Otomatis* atau *Manual*. Gagal terhubung → omzet terakhir dipertahankan + peringatan; status koneksi di menu **Sistem**.
+- Catatan: karena berdasarkan tanggal transaksi dibuat, pelunasan DP di bulan berikutnya menaikkan omzet bulan transaksi itu dibuat — itulah alasan omzet dibekukan saat Final.
+
 ## Update setelah hosting
 
 Alur kerja: **ubah & uji di laptop → kirim ke hosting → selesai.** Tidak perlu phpMyAdmin, tidak perlu menaikkan nomor versi.

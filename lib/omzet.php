@@ -116,6 +116,7 @@ function alasan_sumber_omzet(): ?string
     global $CONFIG;
     $s = $CONFIG['sumber_omzet'] ?? null;
     if ($s === null) return 'file kpi-yunas-sumber-omzet.php tidak ditemukan di samping kpi-yunas-config.php';
+    if (!empty($s['galat'])) return 'file kpi-yunas-sumber-omzet.php salah tulis (periksa tanda kutip di baris db_pass)';
     if (!is_array($s) || empty($s['db_name']) || empty($s['db_user']) || !isset($s['db_pass'])) return 'isi file kpi-yunas-sumber-omzet.php tidak lengkap';
     if (str_starts_with((string)$s['db_pass'], 'GANTI_')) return 'password masih berupa penanda GANTI_… — isi dengan DB_PASSWORD dari .env aplikasi utama';
     return null;

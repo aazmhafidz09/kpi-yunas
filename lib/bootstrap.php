@@ -37,9 +37,16 @@ if (BERKAS_CONFIG_LOKAL) {
 // kpi-yunas-sumber-omzet.php → return ['db_host' => ..., 'db_name' => ..., 'db_user' => ..., 'db_pass' => ...];
 foreach ([dirname(__DIR__, 3), dirname(__DIR__, 2), dirname(__DIR__)] as $dir) {
     if (is_file("$dir/kpi-yunas-sumber-omzet.php")) {
+        // Salah ketik di file ini (mis. tanda kutip) hanya menonaktifkan omzet otomatis, tidak merusak aplikasi.
         ob_start();
-        $sumber = require "$dir/kpi-yunas-sumber-omzet.php";
-        ob_end_clean();
+        try {
+            $sumber = require "$dir/kpi-yunas-sumber-omzet.php";
+        } catch (Throwable $e) {
+            error_log('[kpi-yunas] kpi-yunas-sumber-omzet.php tidak bisa dibaca: ' . $e->getMessage());
+            $sumber = ['galat' => true];
+        } finally {
+            ob_end_clean();
+        }
         if (is_array($sumber)) $CONFIG['sumber_omzet'] = $sumber;
         break;
     }

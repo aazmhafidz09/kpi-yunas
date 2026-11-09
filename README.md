@@ -89,17 +89,39 @@ Kebutuhan: PHP 8.1+ (ekstensi `pdo_mysql`, `mbstring`), MySQL/MariaDB, **HTTPS**
 Alur kerja: **ubah & uji di laptop → kirim ke hosting → selesai.** Tidak perlu phpMyAdmin, tidak perlu menaikkan nomor versi.
 
 1. Ubah kode dan uji di laptop (`http://localhost/kpi-yunas/`).
-2. Kirim ke hosting, salah satu cara:
-   - **Zip:** `C:\xampp\php\php.exe -d extension=zip tools\buat_paket.php` → unggah zip dari `dist/` ke folder situs di File Manager Hostinger → *Extract* (timpa file lama).
-   - **Git** (bila disiapkan): `git commit` + `git push` → Hostinger menarik otomatis.
+2. Kirim ke hosting (cara utama: **Git**):
+   ```
+   git add -A
+   git commit -m "Jelaskan perubahannya"
+   git push
+   ```
+   GitHub memberi tahu Hostinger (webhook) → Hostinger menarik kode baru otomatis dalam hitungan detik.
+   Cadangan tanpa Git: `C:\xampp\php\php.exe -d extension=zip tools\buat_paket.php` → unggah zip dari `dist/` → *Extract* (timpa).
 3. Selesai. Pada request pertama setelah update, aplikasi otomatis:
    - menjalankan **migrasi database** yang baru (tercatat di tabel `migrasi`);
    - menghitung **versi aset** baru dari isi CSS/JS, sehingga HP pegawai otomatis memuat tampilan baru.
 
-Yang tidak ikut ditimpa saat update: `config.local.php` (password database hosting) dan seluruh data.
-Cek hasilnya di menu **Sistem** (Pemilik): rilis terpasang, status migrasi, pemeriksaan server.
+Yang tidak ikut ditimpa saat update: konfigurasi server (`kpi-yunas-config.php`) dan seluruh data.
+Cek hasilnya di menu **Sistem** (Pemilik): rilis/commit terpasang, status migrasi, pemeriksaan server.
 
-Catatan: file yang *dihapus* dari kode tidak ikut terhapus di server bila memakai zip — hapus manual di File Manager bila perlu.
+Aturan: **jangan mengedit kode langsung di server** (File Manager). Semua perubahan lewat laptop → Git, supaya tarikan otomatis tidak bentrok.
+
+## Deploy Git: menyambungkan GitHub ↔ Hostinger (sekali saja)
+
+Repositori GitHub harus **privat** (kode berisi logika bonus & struktur data).
+
+1. **Subdomain & folder kosong.** hPanel → Domains → Subdomains, buat mis. `kpi.domainanda.com`. Buka File Manager, kosongkan folder subdomain itu (hapus `default.php` dsb.) — Hostinger hanya mau deploy ke folder kosong.
+2. **Database.** hPanel → Databases → MySQL: buat database + user + password. Catat nama database & user (password Anda simpan sendiri).
+3. **Hubungkan Git.** hPanel → (website subdomain) → Advanced → **GIT**:
+   - *Private repository*: klik **Generate SSH key**, salin kuncinya → di GitHub: repo → Settings → **Deploy keys** → *Add deploy key* (cukup read-only).
+   - Repository: `git@github.com:<akun>/kpi-yunas.git`, Branch: `main`, Directory: kosongkan (= folder subdomain) → **Create** lalu **Deploy**.
+   - **Auto deployment**: salin *Webhook URL* → di GitHub: repo → Settings → **Webhooks** → *Add webhook* → tempel di *Payload URL*, event: *Just the push event*.
+4. **Konfigurasi server.** Di File Manager, buat `kpi-yunas-config.php` **satu tingkat di atas** folder subdomain (isi dari `config.local.php.contoh`; simpan tanpa BOM). Bila folder induknya ternyata `public_html` situs lain, file tetap aman (PHP tidak menampilkan isinya), atau taruh sebagai `config.local.php` di folder aplikasi.
+5. **Data.** Di laptop: `C:\xampp\php\php.exe -d extension=zip tools\buat_paket.php --dengan-data` → impor file `.sql` dari `dist/` lewat phpMyAdmin hPanel (zip-nya tidak dipakai bila memakai Git).
+6. **Cek.** Buka `https://kpi.domainanda.com`, login, buka menu **Sistem**: semua pemeriksaan harus OK, rilis menunjukkan commit terakhir.
+   Pastikan juga `https://kpi.domainanda.com/lib/kpi.php` dan `/database/seed.sql` **tidak** bisa dibuka (403/404).
+
+Setelah ini, setiap `git push` dari laptop langsung terpasang di hosting.
 
 ## Mengubah struktur database (migrasi)
 

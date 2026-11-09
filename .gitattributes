@@ -1,0 +1,5 @@
+# Simpan teks dengan akhir baris LF (server hosting Linux); gambar sebagai biner.
+* text=auto eol=lf
+*.png binary
+*.ico binary
+*.zip binary

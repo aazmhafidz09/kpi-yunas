@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#2f5d50">
+<title>Tidak ada koneksi · KPI Yunas</title>
+<style>
+  body { margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center; font: 15px/1.5 "Segoe UI", system-ui, -apple-system, sans-serif; background: #f6f5f2; color: #1f2328; padding: 16px; box-sizing: border-box; }
+  .kotak { background: #fff; border: 1px solid #e3e1db; border-radius: 14px; padding: 24px; max-width: 380px; text-align: center; }
+  img { width: 64px; height: 64px; }
+  h1 { font-size: 20px; margin: 12px 0 6px; }
+  p { color: #6b7280; margin: 0 0 16px; }
+  button { font: inherit; background: #2f5d50; color: #fff; border: 0; border-radius: 10px; padding: 12px 20px; width: 100%; cursor: pointer; }
+</style>
+</head>
+<body>
+  <div class="kotak">
+    <img src="assets/ikon/ikon-192.png" alt="">
+    <h1>Tidak ada koneksi</h1>
+    <p>Aplikasi KPI butuh internet untuk memuat data terbaru. Isian yang belum terkirim tetap tersimpan di HP dan akan dikirim otomatis saat online.</p>
+    <button onclick="location.reload()">Coba lagi</button>
+  </div>
+  <script>window.addEventListener('online', () => location.reload());</script>
+</body>
+</html>

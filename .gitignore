@@ -1,0 +1,12 @@
+# Rahasia & pengaturan khusus server — JANGAN masuk repositori
+config.local.php
+
+# Hasil paket (zip & salinan data berisi akun)
+dist/
+*.zip
+
+# Cap rilis dibuat otomatis oleh tools/buat_paket.php
+rilis.txt
+
+# File uji sementara
+_uji*

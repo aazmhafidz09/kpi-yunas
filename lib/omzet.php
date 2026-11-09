@@ -110,10 +110,21 @@ function keterangan_omzet(array $p): string
     return $t . '.';
 }
 
+/** Alasan sumber omzet belum aktif (untuk halaman Sistem), atau null bila sudah lengkap. */
+function alasan_sumber_omzet(): ?string
+{
+    global $CONFIG;
+    $s = $CONFIG['sumber_omzet'] ?? null;
+    if ($s === null) return 'file kpi-yunas-sumber-omzet.php tidak ditemukan di samping kpi-yunas-config.php';
+    if (!is_array($s) || empty($s['db_name']) || empty($s['db_user']) || !isset($s['db_pass'])) return 'isi file kpi-yunas-sumber-omzet.php tidak lengkap';
+    if (str_starts_with((string)$s['db_pass'], 'GANTI_')) return 'password masih berupa penanda GANTI_… — isi dengan DB_PASSWORD dari .env aplikasi utama';
+    return null;
+}
+
 /** Uji koneksi untuk halaman Sistem. */
 function uji_sumber_omzet(): array
 {
-    if (!sumber_omzet_aktif()) return [false, 'belum diatur'];
+    if (!sumber_omzet_aktif()) return [false, 'belum diatur: ' . alasan_sumber_omzet()];
     try {
         $h = hitung_omzet_sumber((int)date('Y'), (int)date('n'));
         return [true, 'terhubung · bulan ini ' . rupiah($h['omzet'])];

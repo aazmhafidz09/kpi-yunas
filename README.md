@@ -3,7 +3,17 @@
 Aplikasi PHP + MySQL (XAMPP) pengganti file Excel KPI. Rumus mengikuti
 *SK Kebijakan Bonus Pegawai Yunas Studio* (berlaku 1 November 2026).
 
-Buka: <http://localhost/kpi-yunas/> (Apache & MySQL harus menyala di XAMPP Control Panel).
+- **Online:** <https://kpi.yunas-studio.com> (Hostinger, deploy otomatis dari GitHub `aazmhafidz09/kpi-yunas` branch `main`)
+- **Laptop (pengembangan):** <http://localhost/kpi-yunas/> (Apache & MySQL harus menyala di XAMPP Control Panel)
+
+Lokasi di Hostinger (paket Premium, situs `yunas-studio.com`):
+
+| | |
+|---|---|
+| Folder aplikasi | `/home/u485208612/domains/yunas-studio.com/public_html/kpi` (diisi otomatis oleh Git — jangan diedit manual) |
+| Konfigurasi server | `/home/u485208612/domains/yunas-studio.com/kpi-yunas-config.php` (berisi password DB, di luar folder web) |
+| Database | `u485208612_kpi` (user `u485208612_kpi`) — terpisah dari database situs lain |
+| Deploy | hPanel → yunas-studio.com → Tingkat lanjut → GIT (aplikasi GitHub Hostinger, akses hanya ke repo ini) |
 
 ## Halaman
 
